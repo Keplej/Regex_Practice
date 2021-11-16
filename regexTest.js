@@ -319,4 +319,117 @@ let resultHa = haRegex.test(haStr);
 console.log(resultHa);
 
 // Specify Exact Number of Matches
-// 30:10
+// We are looking for an exact number of matches
+let timStr = "Timmmmber";
+// This is looking for the word timber with 4 m's to match what you are looking for 
+let timRegex = /Tim{4}ber/;
+let resultTim = timRegex.test(timStr);
+
+console.log("timber", resultTim);
+
+// Check for All or None
+// specify a possible exsistance of an element using ?
+// This checks for zero or 1 of the preceeding element
+// Example: differences between american and british english
+// Example: Favorite - American Favourite - British
+// Place the ? after what you are looking for. It might have u or it might not have a u
+let favWord = "favorite";
+let favRegex = /favou?rite/;
+let resultFav = favRegex.test(favWord);
+
+console.log(resultFav);
+
+// Positive and Negative Lookahead
+// Lookahead tells JS to lookahead in your string and look for patterns further along
+// This is useful when looking for multiple patterns in the same string.
+// There are positive and negative lookaheads 
+let quit = "qu";
+let noquit = "qt";
+// This is a positive lookahead. Lookaheads always start with a ? and the = is for positive 
+// First its checking for a q and then it looksahead to make sure there is a u in the string. If there is a u we just return the q
+let quRegex = /q(?=u)/;
+// ! is for a negative lookahead
+// This is looking a head to check if something is not in the string and in this case it would be u
+let qRegex = /q(?!u)/;
+quit.match(quRegex);
+console.log(quit.match(quRegex));
+
+noquit.match(qRegex);
+console.log(noquit.match(qRegex));
+
+// in this example of look ahead we want to check if there are two or more patterns
+// We are checking passwords that are longer then 5 characters long and have two consecitive digits 
+let sampleWord = "astronaut";
+// For a greater then 5 characters we will do (if a positive lookahead) (\w all number and letter characters) ({5} Then we want there to be aleast 5 charcters) 
+// (?=\w{5})
+// We now want to check for two consecutive digits. (?=\)
+// Now we check for any number of characters that are not ditits \D and * to check for zero or more characters that are not a digit 
+// After \D* we place a \d to say that we are going to have digits 
+// Then we want to check if there are two or more ditits using {2}
+// (?=\w{5}) 5 or more characters
+// (?=\D*\d{2}) 2 or more ditits 
+let pwRegex = /(?=\w{5})(?=\D*\d{2})/;
+let resultPw = pwRegex.test(sampleWord);
+
+console.log(resultPw);
+
+// Reuse Patterns Using Capture Groups
+// You can group things you are looking for with a parentheses
+let repeatStr = "regex regex";
+// we are searching for any number of characters with \w+ and a \s with space
+// parentheses to repeat substrings aka also called a capture group and you can repeat it any number of times.
+// The \1 lets us repeat it 1 time
+// (\w+) - Searching for any number of letters followed by a \s (space) followed by \1 any number of letters that are the same letters as before
+let repeatRegex = /(\w+)\s\1/;
+repeatRegex.test(repeatStr);
+console.log(repeatRegex.test(repeatStr));
+
+repeatStr.match(repeatRegex);
+console.log(repeatStr.match(repeatRegex));
+
+// We are trying to find things that are repeated 3 times in a string
+let repeatNum = "42 42 42";
+// We are looking for any number with (\d+) then a space \s then number \1 a space \s then a number \1
+// We quite aren't done yet as if there were four 42's it would work which we only want three
+// To fix this we add a ^ at the beginning and a $ at the end
+// Remember ^ is finding everything at the beginning of a string and a $ is at the end of a string. It means exactly this so if there was a forth 42 it wouldn't make it true
+let reRegex = /^(\d+)\s\1\s\1$/;
+let resultRe = reRegex.test(repeatNum);
+
+console.log(resultRe);
+
+// Use Capture Groups to Search and Replace
+// To replace use .replace()
+// First we want the regex pattern we want to search for second a string to replace or a function to do something 
+let wrongText = "The sky is silver.";
+let silverRegex = /silver/;
+wrongText.replace(silverRegex, "blue");
+
+console.log(wrongText.replace(silverRegex, "blue"));
+
+// \w+ any number of letters \s space \w+ any number of letters
+// $2 means the second capture group, the second parenthese in the regex (matched to the word camp)
+// $1 is the first capture group which would be Code
+"Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1');
+console.log("Code Camp".replace(/(\w+)\s(\w+)/, '$2 $1'));
+
+let huhText = "This sandwich is good.";
+let fixRegex = /good/;
+let replaceText = "okey-dokey";
+let resultReplace = huhText.replace(fixRegex, replaceText);
+
+console.log(resultReplace);
+
+// Remove Whitespace from Start and End
+let hello = "   Hello, World!   ";
+// To find everything at the beginning we start with a ^
+// Next we do \s to find all the white space
+// + for any number of whitespace characters
+// Next do do a | which means or 
+// \s for space again with the + and then a dollar sign to show the end 
+// lastly we add the g flag
+let wsRegex = /^\s+|\s+$/g;
+// We use '' for empty string 
+let resultWs = hello.replace(wsRegex, '');
+
+console.log(resultWs);
