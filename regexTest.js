@@ -290,3 +290,33 @@ let resultWhiteSpace = whiteSpaceSample.match(countWhiteSpace);
 console.log(resultWhiteSpace);
 
 // Match Non-Whitespace Characters 
+let nonWhiteSpaceSample = "Whitespace is important in separating words";
+// We use \S to match all non-whitespace characters 
+let countNonWhiteSpace = /\S/g;
+let resultNonWhiteSpace = nonWhiteSpaceSample.match(countNonWhiteSpace);
+
+
+console.log(resultNonWhiteSpace);
+
+// Specify Upper and Lower Number of Matches
+// Upper and lower number of pattern matches with quantity specifiers 
+// Quantity specifiers are used with {}
+// For this example we want to match the number of h's between 3-6
+// We put the {} after the Oh so it only matches if there are between 3-6 h's then we will also match with the space and no
+let ohStr = "Ohhh no";
+let ohRegex = /Oh{3,6} no/;
+let resultOh = ohRegex.test(ohStr);
+
+// It comes out as true
+console.log(resultOh);
+
+// Specify Only the Lower Number of Matches
+// In this example we are trying to match 4 or more with the letter z
+let haStr = "Hazzzzah";
+let haRegex = /z{4,}/;
+let resultHa = haRegex.test(haStr);
+
+console.log(resultHa);
+
+// Specify Exact Number of Matches
+// 30:10
