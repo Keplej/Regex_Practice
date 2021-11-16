@@ -195,4 +195,98 @@ let matchedCriminals = crowd.match(reCriminals);
 console.log(matchedCriminals);
 
 // Match Beginning String Patterns
-// Work stop for today at 19:58 https://www.youtube.com/watch?v=ZfQFUJhPqMM
+// We are trying to just find matches at the beginning of the string
+// We can use ^ if not in brackets
+let rickyAndCal = "Cal and Ricky both like racing.";
+let calRegex = /^Cal/;
+let resultCal = calRegex.test(rickyAndCal);
+
+// We match it with Cal and see if its True if its only at the beginning of a string
+// If Cal isn't in the beginning we will receieve a false
+console.log(resultCal);
+
+// Match Ending String Patterns
+// A ^ matches a beginning string pattern and a $ matches the ending string pattern
+// Note: With a carrot we start with it since it is finding the first and we put the $ at the end since it is looking for the ending
+let caboose = "The last car on a train is the caboose";
+let lastRegex = /caboose$/;
+let resultLast = lastRegex.test(caboose);
+
+// As with the ^ if the caboose$ is not at the end of the string it will return as false
+console.log(resultLast);
+
+// Match all letters and numbers
+// There is a short hand character class that can match a wide variety of things 
+// There is one called \w that matches the alphabet 
+// The \w matches capital and lower case a-z, the digits 0-9, and underscore 
+let matchLettersNumbers = "The five boxing wizards jump quickly.";
+// With the g flag it will match every occurence 
+let alphabetRegexV2 = /\w/g;
+// Using length will get the whole length of the string which is 31 excluding the spaces and the peroids 
+let resultAlphabetV2 = matchLettersNumbers.match(alphabetRegexV2).length;
+
+console.log(resultAlphabetV2);
+
+
+// Match Everything But letters and Numbers
+let matchSample = "The five boxing wizards jump quickly.";
+// Here we are matching everything that isn't a letter or number. 
+// In this example we just want to match the spaces and the peroids
+// For this we use a \W 
+let nonAlphabetRegex = /\W/g;
+let resultNonAlphabet = matchSample.match(nonAlphabetRegex).length;
+
+console.log(resultNonAlphabet);
+
+// Match all Numbers
+// Here we will learn how to match just numbers or digits 
+let numString = "Your sandwich will be $5.00";
+// To match just numbers and digits we use \d
+// To match all the numbers and digits we will use the g flag
+let numRegex = /\d/g;
+let resultNum = numString.match(numRegex).length;
+
+console.log(resultNum);
+
+
+// Match all Non-Numbers
+let nonNumString = "Your sandwich will be $5.00";
+// If we change the \d to \D we will match with all non numbers 
+let nonNumRegex = /\D/g;
+let resultNonNum = nonNumString.match(nonNumRegex).length;
+
+console.log(resultNonNum);
+
+// Restrict Possible Usernames
+// This can be used as a username validator
+
+
+/* 
+1) If there are numbers, they must be at the end.
+2) Letters can be lowercase and uppercase.
+3) At least two characters long. Two-Letter names can't have numbers.
+*/
+
+let username = "JackOfAllTrades";
+// Since numbers have to at the end we will use the ^ sign at the start then place our letter requirments.
+// Since we can have upper case and lower case we will have [A-Za-z]
+// Then {} the curly braces indicate the number of times the previous thing can match 
+// For this example {2,} indicates that we can match between 2 and infinte number.
+// The number before the comma (,) is the minimum number of matches and the number after the comma is the maximum number of matches 
+// Next we place \d to show that the numbers must be at the end. The we place a * to indicate zero or more. After that we place the $ to indicate its at the end
+//
+let userCheck = /^[A-Za-z]{2,}\d*$/;
+let resultCheck = userCheck.test(username);
+
+console.log(resultCheck);
+
+// Match Whitespace
+let whiteSpaceSample = "Whitespace is important in separating words";
+// \s matches space, Carriage return, tab, form feed, new line character
+let countWhiteSpace = /\s/g;
+let resultWhiteSpace = whiteSpaceSample.match(countWhiteSpace);
+
+// We get all the spaces in the whiteSpaceSample string
+console.log(resultWhiteSpace);
+
+// Match Non-Whitespace Characters 
